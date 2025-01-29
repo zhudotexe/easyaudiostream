@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "easyaudiostream"
+version = "0.0.1"
+authors = [
+    { name = "Andrew Zhu", email = "andrew@zhu.codes" },
+]
+description = "Simple playback for intermittent audio byte streams in Python."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    # https://pypi.org/classifiers/
+    "Intended Audience :: Developers",
+    "Topic :: Multimedia :: Sound/Audio :: Players",
+]
+dependencies = [
+    "pydub>=0.25.0,<1.0.0",
+]
+
+[project.optional-dependencies]
+pyaudio = [
+    "pyaudio>=0.2.0,<1.0.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/zhudotexe/easyaudiostream"
+"Bug Tracker" = "https://github.com/zhudotexe/easyaudiostream/realtime"
+
+[tool.black]
+line-length = 120
+preview = true
+unstable = true
+
+[tool.isort]
+profile = "black"
+skip_gitignore = true
+line_length = 120
+no_lines_before = "LOCALFOLDER"
+reverse_relative = true
+combine_as_imports = true
