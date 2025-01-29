@@ -17,7 +17,7 @@ _easyaudiostream_ also includes basic utilities for recording audio from a micro
 
 Requires Python 3.8 or higher.
 
-By default, easyaudiostream will use the `ffmpeg` (if it is installed) or the bundled PyDub library for playback.
+By default, easyaudiostream will use `ffmpeg` (if it is installed) or the bundled PyDub library for playback.
 
 ```shell
 $ pip install easyaudiostream

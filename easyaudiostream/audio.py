@@ -104,6 +104,7 @@ class FFMPEGAudioManager(AudioManagerBase):
                 # otherwise write silence
                 else:
                     # no lag time needed - processing should happen within 41us so the next frame is ready in time
+                    # we need to write silence because of https://superuser.com/questions/1859542/ffplay-reading-pcm-data-from-pipe-pause-when-no-data-available-instead-of-cont
                     self.ffplay.stdin.write(silence_bytes)
                     self.ffplay.stdin.flush()
                     time.sleep(0.05)
