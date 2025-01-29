@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "easyaudiostream"
-version = "0.0.1"
+dynamic = ["version"]
 authors = [
     { name = "Andrew Zhu", email = "andrew@zhu.codes" },
 ]
@@ -31,7 +31,10 @@ pyaudio = [
 
 [project.urls]
 "Homepage" = "https://github.com/zhudotexe/easyaudiostream"
-"Bug Tracker" = "https://github.com/zhudotexe/easyaudiostream/realtime"
+"Bug Tracker" = "https://github.com/zhudotexe/easyaudiostream/issues"
+
+[tool.hatch]
+version.path = "easyaudiostream/_version.py"
 
 [tool.black]
 line-length = 120

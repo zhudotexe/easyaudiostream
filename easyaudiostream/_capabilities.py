@@ -1,6 +1,6 @@
 import subprocess
 
-ffplay_available = (
+has_ffmpeg = (
     subprocess.run(["ffplay", "-version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
 )
 

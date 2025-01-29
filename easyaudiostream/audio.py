@@ -146,7 +146,7 @@ class PyDubAudioManager(AudioManagerBase):
 
 if _capabilities.has_pyaudio:
     _global_audio_manager = PyAudioAudioManager()
-elif _capabilities.ffplay_available:
+elif _capabilities.has_ffmpeg:
     _global_audio_manager = FFMPEGAudioManager()
 else:
     warnings.warn(
