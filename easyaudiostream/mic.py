@@ -13,13 +13,13 @@ if _capabilities.has_pyaudio:
     class PyAudioInputManagerBase(abc.ABC):
         """Audio manager using a PyAudio stream. This class should NOT be constructed manually."""
 
-        def __init__(self, mic_id: int | None):
+        def __init__(self, mic_id: int | None, *, width: int = 2, channels: int = 1, rate: int = 24000):
             # init pyaudio, create a recording stream
             p = pyaudio.PyAudio()
             self.stream = p.open(
-                format=p.get_format_from_width(2),
-                channels=1,
-                rate=24000,
+                format=p.get_format_from_width(width),
+                channels=channels,
+                rate=rate,
                 frames_per_buffer=1200,
                 input=True,
                 input_device_index=mic_id,
@@ -73,13 +73,23 @@ if _capabilities.has_pyaudio:
         def __next__(self):
             return self.q.get()
 
-    def get_mic_stream(mic_id: int | None) -> Iterable[bytes]:
-        """Return an audio stream manager that yields audio frames from the given mic."""
-        return PyAudioInputManagerSync(mic_id)
+    def get_mic_stream(mic_id: int | None, *, width: int = 2, channels: int = 1, rate: int = 24000) -> Iterable[bytes]:
+        """
+        Return an audio stream that yields audio frames from the given mic.
 
-    def get_mic_stream_async(mic_id: int | None) -> AsyncIterable[bytes]:
-        """Return an audio stream manager that yields audio frames from the given mic."""
-        return PyAudioInputManagerAsync(mic_id)
+        By default, these audio frames will be 24kHz little-endian mono 16bit PCM encoded.
+        """
+        return PyAudioInputManagerSync(mic_id, width=width, channels=channels, rate=rate)
+
+    def get_mic_stream_async(
+        mic_id: int | None, *, width: int = 2, channels: int = 1, rate: int = 24000
+    ) -> AsyncIterable[bytes]:
+        """
+        Return an audio stream that yields audio frames asynchronously from the given mic.
+
+        By default, these audio frames will be 24kHz little-endian mono 16bit PCM encoded.
+        """
+        return PyAudioInputManagerAsync(mic_id, width=width, channels=channels, rate=rate)
 
     def list_mics():
         """Print a list of all microphones connected to this device."""
