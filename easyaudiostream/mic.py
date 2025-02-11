@@ -1,5 +1,6 @@
 import abc
 import asyncio
+import concurrent.futures
 import queue
 import threading
 import time
@@ -48,8 +49,12 @@ if _capabilities.has_pyaudio:
             self.loop = asyncio.get_event_loop()
 
         def _enqueue(self, frame):
-            fut = asyncio.run_coroutine_threadsafe(self.q.put(frame), self.loop)
-            fut.result()
+            try:
+                fut = asyncio.run_coroutine_threadsafe(self.q.put(frame), self.loop)
+                fut.result()
+            except concurrent.futures.CancelledError:
+                # if the user interrupts the process and the thread dies, clean shutdown
+                pass
 
         def __aiter__(self):
             return self
